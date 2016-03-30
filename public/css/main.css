@@ -1,0 +1,79 @@
+@font-face{
+	font-family: "Avant-Garde";
+	src: url("/fonts/avantgarde/ITCAvantGardeStd-Md.otf") format("opentype");
+}
+body{
+	min-height:1000px;
+	margin: 0px;
+}
+main{
+	background-color: blue;
+	min-height: 400px;
+}
+#mainnav{
+	background-color: transparent;
+	height:120px;
+	width:100%;
+	z-index:3;
+	position:fixed;
+	top:0px;
+}
+.font1{
+	font-family: "Avant-Garde";
+}
+.fontlarge{
+	font-size: 48px;
+}
+.fontmedium{
+	font-size: 36px;
+}
+.fontcenter{
+	text-align: center;
+}
+.toplinks{
+	display: inline-block;
+}
+#titlestuff{
+	display: block;
+	position: relative;
+	width:200px;
+	height:120px;
+	margin-left: auto;
+	margin-right: auto;
+	-webkit-transform: skew(45deg);
+	-moz-transform: skew(45deg);
+	-o-transform: skew(45deg);
+}
+#sitetitle{
+	position: relative;
+	bottom:0px;
+}
+#sitetitleimage{
+	display: block;
+	width:60px;
+	height:60px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#navright {
+	position: absolute;
+	top:0px;
+	left:-58px;
+	width: 25%;
+	height: 120px;
+	-webkit-transform: skew(-45deg);
+	   -moz-transform: skew(-45deg);
+	     -o-transform: skew(-45deg);
+	background: white;
+}
+#navbar{
+	height:60px;
+	width:100%;
+	background-color: white;
+	z-index: 2;
+}
+#toplinkscontainer{
+	position: relative;
+	width:50%;
+	left:0px;
+}
