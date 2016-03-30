@@ -19,9 +19,9 @@ $hello = "Hello World!";
 		</div>
 		<div id="navbar">
 			<div id="toplinkscontainer" class="font1 fontmedium">
-				<div>Categories</div>
-				<div>Stuff</div>
-				<div>Blog</div>
+				<div class="toplinks">Categories</div>
+				<div class="toplinks">Stuff</div>
+				<div class="toplinks">Blog</div>
 			</div>
 		</div>
 	</header>
