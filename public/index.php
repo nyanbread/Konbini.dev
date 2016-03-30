@@ -27,6 +27,8 @@ $hello = "Hello World!";
 		</div>
 	</header>
 	<main>
+		<div id="intro">
+		</div>
 	</main>
 </body>
 </html>
