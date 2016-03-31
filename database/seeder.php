@@ -5,7 +5,7 @@
 	{
 		foreach ($array as $key => $value)
 		{
-			$miniarray = explode(',', $value);
+			$miniarray = explode('|', $value);
 			if ($kind == "ads")
 			{
 				$miniarray = adsArray($miniarray);
@@ -20,7 +20,6 @@
 			}
 			$array[$key] = $miniarray;
 		}
-		array_pop($array);
 		return $array;
 	}
 	function adsArray($miniarray)
@@ -48,7 +47,7 @@
 		$miniarray["e_mail"] = $miniarray[3];
 		$miniarray["location"] = $miniarray[4];
 		$miniarray["userlevel"] = $miniarray[5];
-		for ($i=0; $i < count($miniarray)/2+1; $i++)
+		for ($i=0; $i < count($miniarray)/2+2; $i++)
 		{ 
 			array_shift($miniarray);
 		}
@@ -62,7 +61,7 @@
 		$miniarray["post_date"] = $miniarray[3];
 		$miniarray["post_content"] = $miniarray[4];
 		$miniarray["img_url_main"] = $miniarray[5];
-		for ($i=0; $i < count($miniarray)/2+1; $i++)
+		for ($i=0; $i < count($miniarray)/2+2; $i++)
 		{ 
 			array_shift($miniarray);
 		}
@@ -95,9 +94,21 @@
 	print_r($readlist);
 
 
-
+	if ($filekind == "ads")
+	{
 	$query = "INSERT INTO ".$filekind." (id, user, item, description, price, img_url_main) 
 				VALUES (:id, :user, :item, :description, :price, :img_url_main)";
+	}
+	elseif ($filekind == "users")
+	{
+		$query = "INSERT INTO ".$filekind." (id, user, password, e_mail, location, userlevel)
+					VALUES (:id, :user, :password, :e_mail, :location, :userlevel)";
+	}
+	elseif ($filekind == "posts")
+	{
+		$query = "INSERT INTO ".$filekind." (id, user, title, post_date, post_content, img_url_main)
+					VALUES (:id, :user, :title, :post_date, :post_content, :img_url_main)";
+	}
 	$stmt = $dbc->prepare($query);
 	foreach ($readlist as $partlist => $partarray)
 	{
@@ -106,7 +117,7 @@
 		{
 			echo $key.PHP_EOL.$value.PHP_EOL;
 			$stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
-			echo "Inserted ID" . $dbc->lastInsertId() . PHP_EOL;
+			echo "Inserted at ID " . $dbc->lastInsertId() . PHP_EOL;
 		}
 		$stmt->execute();
 	}
