@@ -39,6 +39,30 @@ class Input
         return (float) $number;
 
     }
+    public static function getImage($key){
+        $directory = "../public/img/uploads";
+        $targetImage = $directory . basename($_FILES['imageToUpload']['name']);
+        $imageType = pathinfo($targetImage, PATHINFO_EXTENSION);
+
+        // checks if the image is an allowed file type
+        if($imageType != "jpg" || $imageType != "png" || $imageType != "jpeg"){
+            echo "Only .jpg, .png, and .jpeg is allowed!"
+        }
+
+        // checks if the image is too big (1000000 = 1MB)
+        if ($_FILES['imageToUpload']['size'] >1000000){
+            echo "This file is too big!"
+        }
+
+        // checks if the file uploaded is even an image with getimagesize
+        if(isset($_POST['uploadImage'])){
+            $check = getimagesize($_FILES['imageToUpload']);
+            if($check === false){
+                echo "That's not an image!"
+            }
+        }
+        return ("/uploads/" . $_FILES['imageToUpload']['name']);
+    }
     }
 
     ///////////////////////////////////////////////////////////////////////////
