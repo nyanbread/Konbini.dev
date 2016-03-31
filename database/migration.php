@@ -11,7 +11,7 @@ $arraycreate = [ 'ads'=>'CREATE TABLE IF NOT EXISTS ads
     user VARCHAR(32) NOT NULL,
     item VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
-    price INT UNSIGNED NOT NULL,
+    price DOUBLE UNSIGNED NOT NULL,
     img_url_main VARCHAR(255) NOT NULL,
     img_url_second VARCHAR(255),
     img_url_third VARCHAR(255),
