@@ -1,0 +1,64 @@
+#mainnav{
+	background-color: transparent;
+	height:120px;
+	width:100%;
+	z-index:3;
+	position:fixed;
+	top:0px;
+}
+.toplinks{
+	display: block;
+	position: relative;
+	vertical-align: middle;
+	margin-left: auto;
+	margin-right: auto;
+}
+.toplinkcenter{
+	margin:12px 0px;
+}
+#titlestuff{
+	display: block;
+	position: relative;
+	width:200px;
+	height:120px;
+	margin-left: auto;
+	margin-right: auto;
+	-webkit-transform: skew(45deg);
+	-moz-transform: skew(45deg);
+	-o-transform: skew(45deg);
+}
+#sitetitle{
+	position: relative;
+	bottom:0px;
+}
+#sitetitleimage{
+	display: block;
+	width:60px;
+	height:60px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#navright {
+	position: absolute;
+	top:0px;
+	left:-58px;
+	width: 350px;
+	height: 120px;
+	-webkit-transform: skew(-45deg);
+	   -moz-transform: skew(-45deg);
+	     -o-transform: skew(-45deg);
+	background: white;
+}
+#navbar{
+	height:60px;
+	width:100%;
+	background-color: white;
+	z-index: 2;
+}
+#toplinkscontainer{
+	position: absolute;
+	display: flex;
+	width:50%;
+	height: inherit;
+	right:0px;
+}

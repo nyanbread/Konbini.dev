@@ -2,21 +2,16 @@
 	font-family: "Avant-Garde";
 	src: url("/fonts/avantgarde/ITCAvantGardeStd-Md.otf") format("opentype");
 }
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 body{
 	min-height:1000px;
 	margin: 0px;
 }
 main{
 	background-color: blue;
-	min-height: 400px;
-}
-#mainnav{
-	background-color: transparent;
-	height:120px;
-	width:100%;
-	z-index:3;
-	position:fixed;
-	top:0px;
 }
 .font1{
 	font-family: "Avant-Garde";
@@ -27,62 +22,104 @@ main{
 .fontmedium{
 	font-size: 36px;
 }
+.fontmidsmall{
+	font-size: 30px;
+}
 .fontcenter{
 	text-align: center;
 }
-.toplinks{
-	display: block;
+
+/* Main Intro Modal Stuff */
+#intromodal{
 	position: relative;
-	vertical-align: middle;
-	margin-left: auto;
-	margin-right: auto;
+	width:100%;
+	height:600px;
+	top:60px;
+	background-color: darkgrey;
 }
-.toplinkcenter{
-	margin:12px 0px;
-}
-#titlestuff{
-	display: block;
-	position: relative;
-	width:200px;
-	height:120px;
-	margin-left: auto;
-	margin-right: auto;
-	-webkit-transform: skew(45deg);
-	-moz-transform: skew(45deg);
-	-o-transform: skew(45deg);
-}
-#sitetitle{
-	position: relative;
-	bottom:0px;
-}
-#sitetitleimage{
-	display: block;
-	width:60px;
-	height:60px;
-	margin-left:auto;
-	margin-right:auto;
-}
-#navright {
+#intromodalnavcontainer{
 	position: absolute;
-	top:0px;
-	left:-58px;
+	width:445px;
+	height:60px;
+	bottom:0px;
+	left:0;
+	right:0;
+	border:4px solid white;
+	border-radius: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: grey; 
+	opacity:0;
+}
+/* For the preloaded ads. */
+.modalimageauto{
+	position: relative;
+	top:50px;
+	max-height:400px;
+	width:auto;
+	padding:20px;
+	border-radius: 24px;
+	background-color: white;
+	display: inline;
+}
+.modaladscontainer{
+	height:600px;
+}
+.modaltextcontainer{
+	background-color: white;
+	padding: 20px;
+	border-radius: 24px;
+	width:30%;
+	position: absolute;
+	right: 100px;
+	bottom: 240px;
+}
+#modalad1{
+	visibility: visible;
+}
+#modalad2{
+	visibility: hidden;
+}
+#modalad3{
+	visibility: hidden;
+}
+.modalarrow{
+	width: auto;
+	height: 60px;
+}
+#intromodalarrowleft{
+	margin-left: 20px;
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+}
+#circlecontainer{
+	display: inline-block;
+	position: relative;
+	min-width:200px;
+	bottom: 10px;
+}
+.intromodalcircle{
+	display: inline-block;
+	position: relative;
+	margin-left: 12px;
+	margin-right: 12px;
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background-color: white;
+}
+#intromodalarrowright{
+	margin-right: 20px;
+}
+#modalcoverbottomleft{
+	position: absolute;
+	bottom:-60px;
+	right:-100px;
 	width: 350px;
 	height: 120px;
 	-webkit-transform: skew(-45deg);
 	   -moz-transform: skew(-45deg);
 	     -o-transform: skew(-45deg);
 	background: white;
-}
-#navbar{
-	height:60px;
-	width:100%;
-	background-color: white;
-	z-index: 2;
-}
-#toplinkscontainer{
-	position: absolute;
-	display: flex;
-	width:50%;
-	height: inherit;
-	right:0px;
 }
