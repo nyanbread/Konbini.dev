@@ -3,7 +3,7 @@ define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'konbini_db');
 define('DB_USER', 'isurus');
 define('DB_PASS', 'isurus');
-require_once 'db_connect.php';
+require_once __DIR__ . '/../db_connect.php';
 $createTableQuery = 'CREATE TABLE IF NOT EXISTS ads
 (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
