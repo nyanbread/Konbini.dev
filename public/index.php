@@ -63,8 +63,9 @@ $realmodalads = adsmodalarray($modalads);
 				</div>
 				<img id="intromodalarrowright" class="modalarrow" src="/img/site/Sideways_Arrow_Icon.png">
 			</div>
-			<div id="modalcoverbottomleft"></div>
 		</div>
+		<div id="modalcoverbottomleft"></div>
+		<div id="maincontent"></div>
 	</main>
 	<script src="/js/jquery-1.12.0.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>

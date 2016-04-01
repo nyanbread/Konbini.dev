@@ -2,7 +2,7 @@
 	background-color: transparent;
 	height:120px;
 	width:100%;
-	z-index:3;
+	z-index:6;
 	position:fixed;
 	top:0px;
 }
@@ -61,4 +61,46 @@
 	width:50%;
 	height: inherit;
 	right:0px;
+}
+#searchtext{
+	position: relative;
+}
+#searchcontainer{
+	position: relative;
+}
+#searchclose{
+	position: relative;
+	display: inline-block;
+	bottom: 4px;
+	border-bottom: 4px solid black;
+}
+#searchfield{
+	min-width: 0px;
+	display: inline-block;
+	position: relative;
+	max-width: 200px;
+	padding-bottom: 4px;
+	font-size:26px;
+	bottom: 0px;
+	border: 0px;
+	border-bottom: 4px solid black;
+}
+#searchicon{
+	position: relative;
+	display: inline-block;
+	width:30px;
+	height:30px;
+	bottom: -13px;
+	padding-bottom: 8px;
+	border-bottom: 4px solid black;
+}
+#areaclickout{
+	visibility: hidden;
+	position: fixed;
+	width:100%;
+	height:100%;
+	top:60px;
+	background-color: black;
+	opacity: .6;
+	z-index: 5;
 }
