@@ -67,18 +67,36 @@ class Ad extends Model
         }
         return $result;
 	}
+	public static function baselist($dbc, $limit, $idstart)
+	{
+		if (isset($limit))
+		{
+			$search = 'SELECT * FROM ads where id >= '.$idstart.' limit ' . $limit;
+		}
+		else
+		{
+			$search = 'SELECT * FROM ads where id >= '.$idstart.' limit 10';
+		}
+		$stmt = $dbc->prepare($search);
+        $stmt->execute();
+        while ($resultrow = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+        	$result[] = $resultrow;
+        }
+        return $result;
+	}
 	public static function findbyitem($item)
 	{
-		$search = 'SELECT * FROM ads where item = :item';
+		$search = 'SELECT * FROM ads where item like :item';
         $stmt = $dbc->prepare($search);
-        $stmt->bindValue(":item", $item, PDO::PARAM_INT);
+        $stmt->bindValue(":item", '%'.$item.'%', PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $instance = null;
-        if ($result) {
-            $instance = new static($result);
+        while ($resultrow = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+        	$result[] = $resultrow;
         }
-        return $instance;
+
+        return $result;
 	}
 }
 ?>

@@ -141,16 +141,36 @@ var navmove = false;
 	/* Functions for clicking and UI */
 	function lazyanimate(){
 		var scroll = $(window).scrollTop();
-		var barrier = $("#maincontent").offset();
-		if (scroll > barrier.top)
+
+		if ($("#maincontent").length > 0)
 		{
-			navmove = true;
-			navanimate(navmove);
+		var barrier = $("#maincontent").offset();
+		console.log(barrier.top);
+			if (scroll > barrier.top)
+			{
+				navmove = true;
+				navanimate(navmove);
+			}
+			else
+			{
+				navmove = false;
+				navanimate(navmove);
+			}
 		}
 		else
 		{
-			navmove = false;
-			navanimate(navmove);
+			var barrier = 300;
+			console.log(barrier);
+			if (scroll > barrier)
+			{
+				navmove = true;
+				navanimate(navmove);
+			}
+			else
+			{
+				navmove = false;
+				navanimate(navmove);
+			}
 		}
 	};
 	function navanimate(move)
