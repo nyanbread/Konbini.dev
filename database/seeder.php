@@ -1,4 +1,5 @@
 <?php
+
 	require_once '../db_connect.php';
 
 	function contentsExplode($array, $kind)
@@ -120,5 +121,6 @@
 			echo "Inserted at ID " . $dbc->lastInsertId() . PHP_EOL;
 		}
 		$stmt->execute();
+
 	}
 ?>

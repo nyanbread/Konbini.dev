@@ -5,10 +5,13 @@ var leftmodalarrow = $("#intromodalarrowleft");
 var rightmodalarrow = $("#intromodalarrowright");
 var search = $("#searchtext");
 var searchclose = $("#searchclose");
+var adcontainer = $(".adcontainer");
+var adarrow = $(".triangle-right");
 var searchon = false;
 var rotation = 0;
 var rotationdir = true;
 var navmove = false;
+var time = 200;
 
 (function(){
 
@@ -137,7 +140,32 @@ var navmove = false;
 		{
 			lazyanimate();
 		}
-	}, 500)
+	}, 500);
+	/* Functions for the view ads page */
+	adcontainer.hover(
+		function(){
+			$(this).children(".triangle-right").animate({
+				"left":"0px",
+				"opacity":"1"
+			},300)
+		},
+		function(){
+			adarrow.animate({
+				"left":"-66px",
+				"opacity":"0"
+			},300)
+		}
+	);
+	adcontainer.each(function (index){
+		var that = $(this);
+		var cooltime = setTimeout(function (){
+			that.animate({
+				"opacity":"1"
+			},400);
+			console.log(that);
+		}, time);
+		time += 200;
+	});
 	/* Functions for clicking and UI */
 	function lazyanimate(){
 		var scroll = $(window).scrollTop();
@@ -160,7 +188,6 @@ var navmove = false;
 		else
 		{
 			var barrier = 300;
-			console.log(barrier);
 			if (scroll > barrier)
 			{
 				navmove = true;
@@ -202,7 +229,7 @@ var navmove = false;
 				},1000);
 				var add = setTimeout(function (){
 					$("#searchtext").remove();
-					$("#search").append("<div id='searchcontainer'><div id='searchclose'>X</div><input id='searchfield' type='text'><img id='searchicon' src='/img/site/search-icon.png'></div>");
+					$("#search").append("<form action='/ads.show.php' id='searchcontainer'><div id='searchclose'>X</div><input id='searchfield' type='text' name='item'><input type='image' src='img/site/search-icon.png' style='width:30px;height:30px;' alt='Submit Form' /></form>");
 					$("#searchcontainer").css({
 						"right":"-280px"
 					}).animate({

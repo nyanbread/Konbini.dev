@@ -85,18 +85,25 @@ class Ad extends Model
         }
         return $result;
 	}
-	public static function findbyitem($item)
+	public static function findbyitem($dbc,$item)
 	{
+		$item = '%'.$item.'%';
 		$search = 'SELECT * FROM ads where item like :item';
         $stmt = $dbc->prepare($search);
-        $stmt->bindValue(":item", '%'.$item.'%', PDO::PARAM_STR);
+        $stmt->bindValue(":item", $item, PDO::PARAM_STR);
         $stmt->execute();
         while ($resultrow = $stmt->fetch(PDO::FETCH_ASSOC))
         {
         	$result[] = $resultrow;
         }
-
-        return $result;
+        if (!is_null(@$result))
+        {
+        	return $result;
+    	}
+    	else
+    	{
+    		return null;
+    	}
 	}
 }
 ?>

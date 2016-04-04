@@ -1,51 +1,41 @@
 <?php
 
-require "../db_connect.php";
-require "../models/Ad.php";
+require_once "../db_connect.php";
 require_once "../views/partials/navbar.php";
-
+require "../models/Ad.php";
 session_start();
 
-if (!isset($_GET['page']) && !isset($_GET['limit']))
+$mainads = new Ad();
+$premainads = $mainads::headlist($dbc);
+function adsArray($preads)
 {
-	$idstart = 1;
-}
-else
-{
-	$idstart = $_GET['page']*$_GET['limit'];
-}
-if (!isset($_GET['limit']))
-{
-	$_GET['limit'] = 10;
-}
-if (!isset($_GET['page']))
-{
-	$_GET['page'] = 0;
-}
-$listads = new Ad();
-$startads = $listads::baselist($dbc, $_GET['limit'], $idstart);
-function adsArray($startads)
-{
-	for ($i=0; $i < count($startads); $i++) { 
-		$ads[$i] = $startads[$i];
+	for ($i=0; $i < count($preads); $i++) { 
+		$ads[$i] = $preads[$i];
 	}
 	return $ads;
 }
-function adsList($adsin)
+function adsmodalarray($ads)
 {
 	$i = 0;
-	while ($i < count($adsin))
-	{
-		$adsnum = $adsin[$i]['id'];
-		$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainer font2'><div class='triangle-right'></div><img class='imageadslist' src='" . $adsin[$i]["img_url_main"] . "'><div class='adstextcontainer'><div class='adname fontlarge'><a href='?itemid=" . $adsin[$i]["id"] . "'>".$adsin[$i]["item"]."</a></div><div class='fontmedium'> From: <a href='?user=1'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
-		$adsin[$i]["description"]."</div></div></div>";
+	while ($i < count($ads)) 
+	{	
+		$modalthing = $i+1;
+		if (strlen($ads[$i]["description"]) > 128)
+		{
+			$realads[$i] = "<div id='modalad" . $modalthing . "' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='" . $ads[$i]["img_url_main"] . "'><div class='modaltextcontainer'><div class='adname fontlarge'><a href='?itemid=" . $ads[$i]["id"] . "'>".$ads[$i]["item"]."</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".substr($ads[$i]["description"],0,128)."...</div></div></div>";
+		}
+		else
+		{
+			$realads[$i] = "<div id='modalad". $modalthing ."' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='". $ads[$i]["img_url_main"] ."'><div class='modaltextcontainer'><div class='adname fontlarge'><a href='?itemid=".$ads[$i]["id"]."'>".$ads[$i]["item"].
+			"</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".
+			$ads[$i]["description"]."</div></div></div>";
+		}
 		$i++;
 	}
-	return $adsout;
-
+	return $realads;
 }
-$testads = adsArray($startads);
-$realads = adsList($testads);
+$modalads = adsArray($premainads);
+$realmodalads = adsmodalarray($modalads);
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,17 +43,29 @@ $realads = adsList($testads);
 	<title>Konbini, The World's Premire Online Store for all things Japanese</title>
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href=<?= $cssnav ?>>
-	<link rel="stylesheet" href="/css/list.css">
 </head>
 <body>
 	<?= $contentnav ?>
 	<main>
-		<?php
-			for ($i=0; $i < count($realads); $i++)
-			{
-				echo $realads[$i];
-			}
-		 ?>
+		<div id="intromodal">
+			<?php
+				for ($i=0; $i < count($realmodalads); $i++)
+				{ 
+					echo $realmodalads[$i];
+				}
+			?>	
+			<div id="intromodalnavcontainer">
+				<img id="intromodalarrowleft" class="modalarrow" src="/img/site/Sideways_Arrow_Icon.png">
+				<div id="circlecontainer">
+					<div id="circle1" class="intromodalcircle"></div>
+					<div id="circle2" class="intromodalcircle"></div>
+					<div id="circle3" class="intromodalcircle"></div>
+				</div>
+				<img id="intromodalarrowright" class="modalarrow" src="/img/site/Sideways_Arrow_Icon.png">
+			</div>
+		</div>
+		<div id="modalcoverbottomleft"></div>
+		<div id="maincontent"></div>
 	</main>
 	<script src="/js/jquery-1.12.0.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>
