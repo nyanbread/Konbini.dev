@@ -117,15 +117,15 @@ extract(pageController());
 			{
 				if($_GET['page'] > 0 and $endposts == false)
 				{
-					echo '<div class="link-container"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink">Previous Page</button></a>'.'<a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink">Next Page</button></a></div>';
+					echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a>'.'<a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
 				}
 				elseif($_GET["page"] > 0 and $endposts == true)
 				{
-					echo '<div class="link-container"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink">Previous Page</button></a></div>';
+					echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a></div>';
 				}
 				elseif($endposts == false)
 				{	
-					echo '<div class="link-container"><a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink">Next Page</button></a></div>';
+					echo '<div class="link-container"><a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
 				}
 			}
 		?>

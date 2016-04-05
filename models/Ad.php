@@ -2,14 +2,14 @@
 require_once "BaseModel.php";
 class Ad extends Model
 {
-	protected function insert()
+	protected function insert($dbc)
 	{
-		if ($this->attributes["img_url_third"])
+		if (array_key_exists("imgurlthird", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second, img_url_third)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second, :img_url_third)';
 		}
-		elseif ($this->attributes["img_url_second"])
+		elseif (array_key_exists("imgurlsecond", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second)';						
@@ -19,14 +19,30 @@ class Ad extends Model
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main)
 						VALUES (:user, :item, :description, :price, :img_url_main)';
 		}
+		echo $insert;
 		$stmt = $dbc->prepare($insert);
+		print_r($this->attributes);
+		$arraymess = ["imgurlthird","imgurlsecond","imgurlmain"];
 		foreach ($this->attributes as $key => $value)
 		{
-            $stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
+			for ($i=0; $i < count($arraymess); $i++)
+			{ 
+				if ($key == $arraymess[$i])
+				{
+					$newkey = substr($key, 0, 3)."_".substr($key, 3, 3)."_".substr($key, 6);
+					echo $newkey.PHP_EOL;
+            		$stmt->bindValue(':'.$newkey, $value, PDO::PARAM_STR);
+        		}
+        		else
+        		{
+        			$stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
+        		}
+			}
+			
         }
         $stmt->execute();
 	}
-	protected function update()
+	protected function update($dbc)
 	{
 		if (array_key_exists("img_url_third", $this->attributes))
 		{

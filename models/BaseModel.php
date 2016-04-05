@@ -1,12 +1,12 @@
 <?php
 abstract class Model
 {
-    protected $ad_attributes = [];
+    protected $attributes = [];
     public function __get($key)
     {
         if (array_key_exists($key, $this->ad_attributes))
         {
-            return $this->ad_attributes[$key];
+            return $this->attributes[$key];
         }
         return null;
     }
@@ -16,15 +16,15 @@ abstract class Model
         $this->attributes[$name] = $value;
     }
     
-    public function savenew()
+    public function savenew($dbc)
     {
-        $this->insert();
+        $this->insert($dbc);
     }
-        public function saveold()
+    public function saveold($dbc)
     {
-        $this->update();
+        $this->update($dbc);
     }
-    protected abstract function insert();
-    protected abstract function update();
+    protected abstract function insert($dbc);
+    protected abstract function update($dbc);
 }
 ?>
