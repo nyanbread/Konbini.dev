@@ -27,42 +27,63 @@ class Input
     public static function getString($key){
         $string = self::get($key);
         if (($string == mull | is_resource($string)) || is_bool($string) || is_numeric($string) || is_array($string) || is_object($string)){
-            throw new Exception('This is not a string or is null!')
+            throw new Exception('This is not a string or is null!');
         }
-        return $string
+        return $string;
         }
     public static function getNumber($key){
         $number = self::get($key);
         if (!is_numeric($number) || $number == null){
-            throw new Exception('This is not a number, or it\'s null.')
+            throw new Exception('This is not a number, or it\'s null.');
         }
         return (float) $number;
 
     }
-    public static function getImage($key){
-        $directory = "../public/img/uploads";
-        $targetImage = $directory . basename($_FILES['imageToUpload']['name']);
+    public static function getImage($key)
+    {
+        $test = $key;
+        $directory = "img/uploads/ads/";
+        $targetImage = $directory . basename($key['name']);
         $imageType = pathinfo($targetImage, PATHINFO_EXTENSION);
 
+        $acceptedfiles = ["jpg","png","gif","jpeg"];
         // checks if the image is an allowed file type
-        if($imageType != "jpg" || $imageType != "png" || $imageType != "jpeg"){
-            echo "Only .jpg, .png, and .jpeg is allowed!"
+        for ($i=0; $i < count($acceptedfiles); $i++)
+        { 
+            if($imageType == $acceptedfiles[$i])
+            {
+                echo "Okay!";
+                $imageFiletrue = true;
+                break;
+            }
+            $imageFiletrue = false;
         }
+        if (!$imageFiletrue) {
+            echo "Not an accepted image filetype.";
+            return false;
+        }
+        
 
         // checks if the image is too big (1000000 = 1MB)
-        if ($_FILES['imageToUpload']['size'] >1000000){
-            echo "This file is too big!"
+        if ($key['size'] > 1000000){
+            echo "This file is too big!";
+            return false;
         }
 
         // checks if the file uploaded is even an image with getimagesize
-        if(isset($_POST['uploadImage'])){
-            $check = getimagesize($_FILES['imageToUpload']);
-            if($check === false){
-                echo "That's not an image!"
-            }
+
+        $check = getimagesize($key['tmp_name']);
+        var_dump($check);
+        if($check == false)
+        {
+            echo "That's not an image!";
+            return false;
         }
-        return ("/uploads/" . $_FILES['imageToUpload']['name']);
-    }
+        else
+        {
+            move_uploaded_file($key['tmp_name'], $targetImage);
+            echo "Great Success";
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

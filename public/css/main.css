@@ -1,0 +1,152 @@
+@font-face{
+	font-family: "Avant-Garde";
+	src: url("/fonts/avantgarde/ITCAvantGardeStd-Md.otf") format("opentype");
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+body{
+	min-height: 1000px;
+	margin: 0px;
+}
+main{
+	background-image: url("/img/site/sayagata-400px.png");
+	min-height: 1000px;
+}
+.font1{
+	font-family: "Avant-Garde";
+}
+.fontlarge{
+	font-size: 48px;
+}
+.fontmedium{
+	font-size: 36px;
+}
+.fontmidsmall{
+	font-size: 30px;
+}
+.fontcenter{
+	text-align: center;
+}
+
+/* Main Intro Modal Stuff */
+#intromodal{
+	position: relative;
+	width:100%;
+	height:600px;
+	top:60px;
+	background-color: darkgrey;
+}
+#intromodalnavcontainer{
+	position: absolute;
+	width:445px;
+	height:60px;
+	bottom:0px;
+	left:0;
+	right:0;
+	border:4px solid white;
+	border-radius: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: grey; 
+	opacity:0;
+}
+/* For the preloaded ads. */
+.modalimageauto{
+	position: absolute;
+	bottom:100px;
+	max-height:400px;
+	max-width: 400px;
+	padding:20px;
+	left: 0;
+	right: 0;
+	margin-right: auto;
+	margin-left: auto;
+	border-radius: 24px;
+	background-color: white;
+	display: inline;
+}
+.modaladscontainer{
+	height:600px;
+	position: absolute;
+	right:0;
+	left:0;
+	margin-right: auto;
+	margin-left: auto;
+	display: table;
+}
+.modaltextcontainer{
+	display: inline-block;
+	background-color: white;
+	padding: 20px;
+	border-radius: 24px;
+	width:400px;
+	min-height: 200px;
+	top: 160px;
+	position: relative;
+	left: 460px;
+}
+#modalad1{
+	visibility: visible;
+	display: block;
+}
+#modalad2{
+	visibility: hidden;
+	display: block;
+}
+#modalad3{
+	visibility: hidden;
+	display: block;
+}
+.modalarrow{
+	width: auto;
+	height: 60px;
+}
+#intromodalarrowleft{
+	position: relative;
+	margin-left: 20px;
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+}
+#circlecontainer{
+	display: inline-block;
+	position: relative;
+	min-width:200px;
+	bottom: 10px;
+}
+.intromodalcircle{
+	display: inline-block;
+	position: relative;
+	margin-left: 12px;
+	margin-right: 12px;
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background-color: white;
+}
+#intromodalarrowright{
+	position: relative;
+	margin-right: 20px;
+}
+#modalcoverbottomleft{
+	position: absolute;
+	display: block;
+	top:600px;
+	right:-58px;
+	width: 350px;
+	height: 120px;
+	-webkit-transform: skew(-45deg);
+	   -moz-transform: skew(-45deg);
+	     -o-transform: skew(-45deg);
+	background: white;
+}
+/* For the main body */
+#maincontent{
+	position: relative;
+	top:60px;
+	width:100%;
+	height:60px;
+	background-color: white;
+}

@@ -1,0 +1,94 @@
+.triangle-right {
+	position: absolute;
+	top:30%;
+	left:-66px;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	border-top: 50px solid transparent;
+	border-left: 66px solid #9592A9;
+	border-bottom: 50px solid transparent;
+}
+.adcontainer{
+	width:80%;
+	padding:20px;
+	opacity:0;
+	padding-left: 100px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	background-color: white;
+	border-radius: 24px;
+}
+.adcontainerfail{
+	width:80%;
+	padding:20px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	background-color: white;
+	border-radius: 24px;
+}
+.imageadslist{
+	max-height: 300px;
+	margin-left: 20px;
+	width:auto;
+	max-width: 350px;
+	display: inline;
+}
+.imgoops{
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width:600px;
+}
+.mainadscontainer{
+	width:80%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	background-color: transparent;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+.adstextcontainer{
+	display: inline-block;
+	width:50%;
+
+}
+
+div.adstextcontainer{
+	position: absolute;
+	top:20px;
+	right:20px;
+	max-width: 40%;
+	max-height: 80%;
+	overflow: scroll;
+}
+.link-container{
+	position: relative;
+	width:60%;
+	display: flex;
+	justify-content:center;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+.pagelink{
+	background-color: white;
+	color:black;
+	border:0px;
+	width:100%;
+	padding: 8px;
+	min-height: 60px;
+	border-radius: 16px;
+}
+main{
+	background-image: url("/img/site/sayagata-400px.png");
+}
