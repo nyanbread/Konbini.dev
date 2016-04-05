@@ -3,8 +3,8 @@
 require "../db_connect.php";
 require "../models/Ad.php";
 require_once "../views/partials/navbar.php";
+require_once "../views/partials/footer.php";
 
-session_start();
 if (!isset($_GET['page']) or $_GET["page"] < 0)
 {
 	$_GET['page'] = 0;
@@ -63,11 +63,14 @@ if (!is_null($startads))
 {
 	$testads = adsArray($startads);
 	$realads = adsList($testads);
+
 }
 else
 {
 	$realads[0] = "<div class='adcontainerfail font2'><img class='imgoops' src='/img/site/shrug.gif'><div class='failtext font1 fontlarge fontcenter'>OOPS!<br>We couldn't find what you're looking for dude.</div></div>"; 
 }
+$footer = new Footer();
+$footer->userControls($testads[0]['user']);
 function pageController()
 {
 	if (!isset($_GET["page"]))
@@ -88,6 +91,7 @@ extract(pageController());
 	<title>Konbini, The World's Premire Online Store for all things Japanese</title>
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href=<?= $cssnav ?>>
+	<link rel="stylesheet" href=<?= $footer->footcss ?>>
 	<link rel="stylesheet" href="/css/list.css">
 </head>
 <body>
@@ -130,6 +134,7 @@ extract(pageController());
 			}
 		?>
 	</main>
+	<?= $footer->getFooter() ?>
 	<script src="/js/jquery-1.12.0.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/js/main.js"></script>

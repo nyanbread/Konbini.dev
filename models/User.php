@@ -16,7 +16,7 @@ class User extends Model
         'img_url',
     ];
 
-    protected function insert()
+    protected function insert($dbc)
     {
         $insert = 'INSERT INTO ads (user, item, description, price, img_url)
                     VALUES (:user, :item, :description, :price, :img_url)';
@@ -31,7 +31,7 @@ class User extends Model
         
     }
 
-    protected function update()
+    protected function update($dbc)
     {
         $update = 
         'UPDATE ads 
@@ -56,21 +56,16 @@ class User extends Model
      *
      * @return User An instance of the User class with attributes array set to values from the database
      */
-    public static function find($id)
+    public static function findname($name, $dbc)
     {
-        self::dbConnect();
-        $select = 'SELECT * FROM user WHERE id = :id';
-        $stmt = self::$dbc->prepare($select);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $select = 'SELECT * FROM users WHERE user = :user';
+        $stmt = $dbc->prepare($select);
+        $stmt->bindValue(':user', $name, PDO::PARAM_INT);
         $stmt->execute();
 
         $result = $stmt->fetch();
 
-        $instance = null;
-        if ($result) {
-            $instance = new static($result);
-        }
-        return $instance;
+        return $result;
     }
 
     /**

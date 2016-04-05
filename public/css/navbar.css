@@ -82,7 +82,7 @@ a:hover:before {
 #toplinkscontainer{
 	position: absolute;
 	display: flex;
-	width:50%;
+	width:40%;
 	height: inherit;
 	right:0px;
 }
@@ -128,4 +128,14 @@ a:hover:before {
 	background-color: black;
 	opacity: .6;
 	z-index: 5;
+}
+#userecho{
+	display: inline-block;
+	position: absolute;
+	left:300px;
+}
+#usertitle{
+	margin-top: 12px;
+}
+	z-index: 10;
 }

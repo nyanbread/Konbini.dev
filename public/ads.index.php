@@ -3,7 +3,6 @@
 require_once "../db_connect.php";
 require_once "../views/partials/navbar.php";
 require "../models/Ad.php";
-session_start();
 
 $mainads = new Ad();
 $premainads = $mainads::headlist($dbc);
@@ -22,11 +21,11 @@ function adsmodalarray($ads)
 		$modalthing = $i+1;
 		if (strlen($ads[$i]["description"]) > 128)
 		{
-			$realads[$i] = "<div id='modalad" . $modalthing . "' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='" . $ads[$i]["img_url_main"] . "'><div class='modaltextcontainer'><div class='adname fontlarge'><a href='?itemid=" . $ads[$i]["id"] . "'>".$ads[$i]["item"]."</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".substr($ads[$i]["description"],0,128)."...</div></div></div>";
+			$realads[$i] = "<div id='modalad" . $modalthing . "' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='" . $ads[$i]["img_url_main"] . "'><div class='modaltextcontainer'><div class='adname fontlarge'><a href=?itemid=" . $ads[$i]["id"] . "'>".$ads[$i]["item"]."</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".substr($ads[$i]["description"],0,128)."...</div></div></div>";
 		}
 		else
 		{
-			$realads[$i] = "<div id='modalad". $modalthing ."' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='". $ads[$i]["img_url_main"] ."'><div class='modaltextcontainer'><div class='adname fontlarge'><a href='?itemid=".$ads[$i]["id"]."'>".$ads[$i]["item"].
+			$realads[$i] = "<div id='modalad". $modalthing ."' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='". $ads[$i]["img_url_main"] ."'><div class='modaltextcontainer'><div class='adname fontlarge'><a href=/ads.show.php?itemid=".$ads[$i]["id"].">".$ads[$i]["item"].
 			"</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".
 			$ads[$i]["description"]."</div></div></div>";
 		}

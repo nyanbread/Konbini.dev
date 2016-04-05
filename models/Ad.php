@@ -99,7 +99,7 @@ class Ad extends Model
         {
         	$result[] = $resultrow;
         }
-        return $result;
+        return @$result;
 	}
 	public static function findbyitem($dbc,$item)
 	{

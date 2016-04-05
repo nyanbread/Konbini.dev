@@ -52,37 +52,31 @@ class Input
         { 
             if($imageType == $acceptedfiles[$i])
             {
-                echo "Okay!";
                 $imageFiletrue = true;
                 break;
             }
             $imageFiletrue = false;
         }
         if (!$imageFiletrue) {
-            echo "Not an accepted image filetype.";
             return false;
         }
         
 
         // checks if the image is too big (1000000 = 1MB)
         if ($key['size'] > 1000000){
-            echo "This file is too big!";
             return false;
         }
 
         // checks if the file uploaded is even an image with getimagesize
 
         $check = getimagesize($key['tmp_name']);
-        var_dump($check);
         if($check == false)
         {
-            echo "That's not an image!";
             return false;
         }
         else
         {
             move_uploaded_file($key['tmp_name'], $targetImage);
-            echo "Great Success";
         }
     }
 
