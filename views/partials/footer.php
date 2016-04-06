@@ -5,10 +5,10 @@ class Footer
 	public $footcss = "\"/css/footer.css\"";
 	public $contentfoot; 
 	public $adpost;
-	public $adedit;
+	public $adedit = '';
 	public $logout;
 
-	public function userControls($realuser)
+	public function userControls()
 	{
 		if(isset($_SESSION['user']))
 		{
@@ -20,7 +20,10 @@ class Footer
 			$this->adpost = '';
 			$this->logout = '';
 		}
-		if((isset($_GET['itemid'])) && ($_SESSION['user'] == $realuser))
+	}
+	public function editCheck($realuser, $aduser)
+	{
+		if((isset($_GET['itemid'])) && ($aduser == $realuser))
 		{
 			$itemid = $_GET['itemid'];
 			$this->adedit = "<div id='editad' class='bottomlinks'><a href='/ads.edit.php?itemid=".$itemid."'>Edit</div>";
@@ -29,7 +32,6 @@ class Footer
 		{
 			$this->adedit = '';
 		}
-
 	}
 	public function getFooter()
 	{

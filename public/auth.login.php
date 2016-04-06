@@ -39,7 +39,7 @@
 			<div class='adcontainerfail font1'>
 				<form method="POST" enctype="multipart/form-data" action="/auth.login.php" class='formcontainer'>
 					<input class="font1 fontsmall" type="text" name="user" placeholder="Username">
-					<input class="font1 fontsmall" type="text" name="password" placeholder="Password">
+					<input class="font1 fontsmall" type="password" name="password" placeholder="Password">
 					<input class="font1 fontsmall subbutton" type="submit" value="Login">
 				</form>
 			</div>

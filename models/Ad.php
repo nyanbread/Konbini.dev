@@ -124,5 +124,21 @@ class Ad extends Model
     		return null;
     	}
 	}
+	public static function findbyuser($dbc,$user,$idstart)
+	{
+		$search = 'SELECT * FROM ads where user = :user and id >= :id limit 10';
+		$stmt = $dbc->prepare($search);
+        $stmt->bindValue(":user", $user, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $idstart, PDO::PARAM_INT);
+        $stmt->execute();
+        while ($resultrow = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+        	$result[] = $resultrow;
+        }
+        if (!is_null(@$result))
+        {
+        	return $result;
+    	}
+	}
 }
 ?>

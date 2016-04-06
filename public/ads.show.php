@@ -30,7 +30,11 @@ if (!isset($_GET['limit']))
 	$_GET['limit'] = 10;
 }
 $listads = new Ad();
-if (!isset($_GET['item']))
+if (isset($_GET['user']))
+{
+	$startads = $listads::findbyuser($dbc,$_GET['user'],$idstart);
+}
+elseif (!isset($_GET['item']))
 {
 	$startads = $listads::baselist($dbc, $_GET['limit'], $idstart);
 }
@@ -50,11 +54,22 @@ function adsList($adsin)
 	$i = 0;
 	while ($i < count($adsin))
 	{
-		$adsprice = "$".number_format((float)$adsin[$i]["price"], 2, '.', '');
-		$adsnum = $adsin[$i]['id'];
-		$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainer font1'><div class='triangle-right'></div><img class='imageadslist' src='" . $adsin[$i]["img_url_main"] . "'><div class='adstextcontainer'><div class='adname fontlarge'><a href='?itemid=" . $adsin[$i]["id"] . "'>".$adsin[$i]["item"]."</a></div><div class='fontmedium'> From: <a href='?user=1'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
-		$adsin[$i]["description"]."</div><div class='pricecontiner'>". $adsprice ."</div></div></div>";
-		$i++;
+		if (count($adsin) > 1)
+		{
+			$adsprice = "$".number_format((float)$adsin[$i]["price"], 2, '.', '');
+			$adsnum = $adsin[$i]['id'];
+			$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainer font1'><div class='triangle-right'></div><img class='imageadslist' src='" . $adsin[$i]["img_url_main"] . "'><div class='adstextcontainer'><div class='adname fontlarge'><a href='?itemid=" . $adsin[$i]["id"] . "'>".$adsin[$i]["item"]."</a></div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			$i++;
+		}
+		else
+		{
+			$adsprice = "$".number_format((float)$adsin[$i]["price"], 2, '.', '');
+			$adsnum = $adsin[$i]['id'];
+			$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><img class='imageadssolo' src='" . $adsin[$i]["img_url_main"] . "'><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			$i++;
+		}
 	}
 	return $adsout;
 
@@ -63,14 +78,21 @@ if (!is_null($startads))
 {
 	$testads = adsArray($startads);
 	$realads = adsList($testads);
+	$adsexist = true;
 
 }
 else
 {
-	$realads[0] = "<div class='adcontainerfail font2'><img class='imgoops' src='/img/site/shrug.gif'><div class='failtext font1 fontlarge fontcenter'>OOPS!<br>We couldn't find what you're looking for dude.</div></div>"; 
+	$realads[0] = "<div class='adcontainerfail font2'><img class='imgoops' src='/img/site/shrug.gif'><div class='failtext font1 fontlarge fontcenter'>OOPS!<br>We couldn't find what you're looking for dude.</div></div>";
+	$adsexist = false;
 }
 $footer = new Footer();
-$footer->userControls($testads[0]['user']);
+$footer->userControls();
+if (count($realads) == 1 and $adsexist == true)
+{
+	echo $testads[0]['user'];
+	$footer->editcheck($_SESSION['user'], $testads[0]['user']);
+}
 function pageController()
 {
 	if (!isset($_GET["page"]))
