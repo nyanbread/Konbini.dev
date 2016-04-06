@@ -27,6 +27,9 @@ main{
 .fontmidsmall{
 	font-size: 30px;
 }
+.fontsmall{
+	font-size: 24px;
+}
 .fontcenter{
 	text-align: center;
 }
@@ -153,8 +156,31 @@ main{
 }
 /* For forms */
 #loginmargin{
-	padding-top: 20%;
+	padding-top: 10%;
 }
 .formcontainer{
 	width:40%;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+.formcontainer > input,textarea{
+	position: relative;
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+input.imginput{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 10px;
+}
+.subbutton{
+	width:200px;
+	padding: 4px;
+	background-color: white;
+	border:2px solid black;
+	border-radius: 8px;
 }

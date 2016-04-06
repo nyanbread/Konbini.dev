@@ -4,7 +4,7 @@
 	{
 		if (!isset($_SESSION["user"]))
 		{
-			$_SESSION["user"] = "Lonely Soul";
+			$_SESSION["user"] = null;
 		}
 		if (!isset($_SESSION['is_logged_in']))
 		{
@@ -19,7 +19,7 @@
 		}
 		else
 		{
-			return "You are a <a href='/auth.login.php'>". $_SESSION["user"]."</a>";
+			return "Please <a href='/auth.login.php'>Login</a>";
 		}
 	}
 	userSet();

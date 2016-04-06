@@ -1,40 +1,36 @@
 <?php
 
 require_once __DIR__ . '/BaseModel.php';
-
+/* Dude, like 90% of this is copy pasted from Ad.php.
+/* You really need to check the tables next time. */
 class User extends Model
 {
-    protected static $table = 'ads';
-
-    protected $columns = 
-    [
-        'id',
-        'user',
-        'item',
-        'description',
-        'price',
-        'img_url',
-    ];
-
+    private $options = [
+            'cost' => 12,
+        ];
     protected function insert($dbc)
     {
-        $insert = 'INSERT INTO ads (user, item, description, price, img_url)
-                    VALUES (:user, :item, :description, :price, :img_url)';
-        $stmt = self::$dbc->prepare($insert);
-        unset($this->attributes['id']);
+        $insert = 'INSERT INTO users (user, password, e_mail, location, userlevel)
+                    VALUES (:user, :password, :e_mail, :location, :userlevel)';
+        $stmt = $dbc->prepare($insert);
         foreach ($this->attributes as $key => $value){
-            $stmt->bindValue(":$key", $value, PDO::PARAM_STR);
+            echo $value;
+            if ($key == "password")
+            {
+                $stmt->bindValue(":".$key, password_hash($value, PASSWORD_BCRYPT, $this->options), PDO::PARAM_STR);
+            }
+            else
+            {
+                $stmt->bindValue(":".$key, $value, PDO::PARAM_STR);
+            }
         }
         $stmt->execute();
-        $this->attributes['id'] = self::$dbc->lastInsertId();
-        
-        
     }
 
     protected function update($dbc)
     {
         $update = 
-        'UPDATE ads 
+        'UPDATE users 
         SET user = :user, 
             item = :item, 
             description = :description, 
@@ -66,27 +62,5 @@ class User extends Model
         $result = $stmt->fetch();
 
         return $result;
-    }
-
-    /**
-     * Find all records in a table
-     *
-     * @return User[] Array of instances of the User class with attributes set to values from database
-     */
-    public static function all()
-    {
-        self::dbConnect();
-
-        // @TODO: Learning from the find method, return all the matching records
-        $select = 'SELECT * FROM user';
-        $stmt = self::$dbc->prepare($select);
-        $stmt->execute();
-
-        $result = $statement->fetchAll();
-        $user = [];
-        foreach ($result as $row) {
-            $user[] = new User($row);
-        }
-        return $user;
     }
 }

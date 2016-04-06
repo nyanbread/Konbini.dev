@@ -7,7 +7,6 @@
     if (!empty($_POST))
     {
         $adAdd = new Ad();
-        print_r($_POST);
         foreach ($_POST as $key => $value)
         {
             echo $key.PHP_EOL;
@@ -29,6 +28,10 @@
         }
         $adAdd->savenew($dbc);
     }
+    if(!$_SESSION["is_logged_in"])
+    {
+        header("Location: /ads.index.php");
+    }
 $footer = new Footer();
 $footer->userControls($_SESSION['user']);
 ?>
@@ -45,26 +48,15 @@ $footer->userControls($_SESSION['user']);
 	<main>
         <div id="loginmargin" class="mainadscontainer">
             <div class='adcontainerfail font1'>
-            	<form method="POST" enctype="multipart/form-data" action="/ads.create.php">
-                	<div class="form-group">
-                        <input type="hidden" name="user" value=<?= $_SESSION['user'] ?>>
-                    	<label for="item">Name of the Item: </label>
-                        <input id='item' type="text" name='item' placeholder="name">
-                    </div>
-                     <div class="form-group">
-                         <label for="price">Buyout Amount: </label>
-                         <input id='price' type="text" name='price' placeholder="price">
-                     </div>
-                     <div class="form-group">
-                         <label for="description">Description of Item: </label>
-                         <input id='description' type="text" name='description' placeholder="description">
-                     </div>
-                     <div class="image-insert">
-                     	<input type="file" name="img_url_main" id="img1">
-                        <input type="file" name="img_url_second" id="img2">
-                        <input type="file" name="img_url_third" id="img3">
-                     	<input type="submit" class="button">
-                     </div>
+            	<form class="formcontainer" method="POST" enctype="multipart/form-data" action="/ads.create.php">
+                        <input class="font1 fontmidsmall" type="hidden" name="user" value=<?= $_SESSION['user'] ?>>
+                        <input id='item' class="font1 fontmidsmall" type="text" name='item' placeholder="name">
+                         <input id='price' class="font1 fontmidsmall" type="text" name='price' placeholder="price">
+                         <input id='description' class="font1 fontmidsmall" type="text" name='description' placeholder="description">
+                     	<input type="file" class="imginput font1 fontmidsmall" name="img_url_main" id="img1">
+                        <input type="file" class="imginput font1 fontmidsmall" name="img_url_second" id="img2">
+                        <input type="file" class="imginput font1 fontmidsmall" name="img_url_third" id="img3">
+                     	<input type="submit" class="button font1 fontmidsmall">
                 </form>
             </div>
         </div>
