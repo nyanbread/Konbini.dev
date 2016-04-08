@@ -60,7 +60,7 @@ $footer->userControls($_SESSION['user']);
                         <input class="font1 fontmidsmall" type="hidden" name="user" value=<?= $_SESSION['user'] ?>>
                         <?php
                         foreach ($lazyAd as $key => $value) {
-                            if ($key !== "id" or $key !== "user")
+                            if ($key !== "user" && $key !== "id")
                             {
                                 if($key == "description")
                                 {
@@ -87,5 +87,8 @@ $footer->userControls($_SESSION['user']);
         </div>
     </main>
     <?= $footer->getFooter() ?>
+    <script src="/js/jquery-1.12.0.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

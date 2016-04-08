@@ -40,6 +40,9 @@
 	max-width: 350px;
 	display: inline;
 }
+#imageadscontainer{
+	min-height:600px;
+}
 .imageadssolo{
 	display: block;
 	max-height: 600px;
@@ -47,6 +50,14 @@
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
+	bottom: 0px;
+}
+.imageadsdisplayed{
+	visibility: visible;
+}
+img.imageadshidden{
+	visibility: hidden;
+	height:0px;
 }
 .imgoops{
 	position: relative;
@@ -123,6 +134,47 @@ div.adstextcontainer{
 	padding: 8px;
 	min-height: 60px;
 	border-radius: 16px;
+}
+#adsimgmodal{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 200px;
+	max-width: 300px;
+}
+.imageadssolomodal{
+	height:50px;
+	width: auto;
+	border-radius: 4px;
+	margin: 4px auto;
+	opacity:.6;
+}
+.imageadssoloborder{
+	border: 2px solid black;
+}
+#response{
+	visibility: hidden;
+	width:0;
+	height:0;
+}
+#yesbye{
+	-webkit-transition: all 0.3s ease-in-out 0s;
+	transition: all 0.3s ease-in-out 0s;
+}
+#yesbye:hover{
+	color:red;
+}
+#yesbye a:before{
+	background-color: red;
+}
+#nobye{
+	-webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+#nobye:hover{
+	color:blue;
 }
 main{
 	background-image: url("/img/site/sayagata-400px.png");

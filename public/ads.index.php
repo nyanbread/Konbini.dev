@@ -2,6 +2,7 @@
 
 require_once "../db_connect.php";
 require_once "../views/partials/navbar.php";
+require_once "../views/partials/footer.php";
 require "../models/Ad.php";
 
 $mainads = new Ad();
@@ -26,7 +27,7 @@ function adsmodalarray($ads)
 		else
 		{
 			$realads[$i] = "<div id='modalad". $modalthing ."' class='modaladscontainer font1 fontcenter'><img class='modalimageauto' src='". $ads[$i]["img_url_main"] ."'><div class='modaltextcontainer'><div class='adname fontlarge'><a href=/ads.show.php?itemid=".$ads[$i]["id"].">".$ads[$i]["item"].
-			"</a></div><div class='fontmedium'>Courtesy of <a href='?user=1'>".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".
+			"</a></div><div class='fontmedium'>Courtesy of <a href=/ads.show.php?user=".$ads[$i]["user"].">".$ads[$i]["user"]."</a></div><div class='modaladdescription fontmidsmall'>".
 			$ads[$i]["description"]."</div></div></div>";
 		}
 		$i++;
@@ -35,6 +36,8 @@ function adsmodalarray($ads)
 }
 $modalads = adsArray($premainads);
 $realmodalads = adsmodalarray($modalads);
+$footer = new Footer();
+$footer->userControls();
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,11 +45,16 @@ $realmodalads = adsmodalarray($modalads);
 	<title>Konbini, The World's Premire Online Store for all things Japanese</title>
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href=<?= $cssnav ?>>
+	<link rel="stylesheet" href=<?= $footer->footcss ?>>
 </head>
 <body>
 	<?= $contentnav ?>
 	<main>
 		<div id="intromodal">
+			<video autoplay loop id="bgvid">
+    			<source src="/videos/edm2.webm" type="video/webm">
+    			<source src="/videos/free-loops_EDM_Triangles_Background_6_Slow.mp4" type="video/mp4">
+			</video>
 			<?php
 				for ($i=0; $i < count($realmodalads); $i++)
 				{ 
@@ -62,10 +70,10 @@ $realmodalads = adsmodalarray($modalads);
 				</div>
 				<img id="intromodalarrowright" class="modalarrow" src="/img/site/Sideways_Arrow_Icon.png">
 			</div>
+			<div id="modalcoverbottomleft"></div>
 		</div>
-		<div id="modalcoverbottomleft"></div>
-		<div id="maincontent"></div>
 	</main>
+	<?= $footer->getFooter() ?>
 	<script src="/js/jquery-1.12.0.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/js/main.js"></script>

@@ -7,14 +7,17 @@ var search = $("#searchtext");
 var searchclose = $("#searchclose");
 var adcontainer = $(".adcontainer");
 var adarrow = $(".triangle-right");
+var iasm = $(".imageadssolomodal");
+var adimages = $('.imageadssolo');
 var searchon = false;
 var rotation = 0;
 var rotationdir = true;
 var navmove = false;
 var time = 200;
+var deltext = $('#response').text();
 
 (function(){
-
+	console.log(deltext);
 	function rotateAds(rotation, rotationdir)
 	{
 		var rotation1;
@@ -41,9 +44,14 @@ var time = 200;
 				{
 					$(this).css({
 						"visibility":"visible",
-						"right":"150%"
+						"right":"100%"
 					}).animate({
 						"right":"0px"
+					},2000);
+					$(this).children().css({
+						"opacity":'0'
+					}).animate({
+						"opacity":'1'
 					},2000);
 				}
 				else
@@ -80,6 +88,11 @@ var time = 200;
 					}).animate({
 						"left":"0px"
 					},2000);
+					$(this).children().css({
+						"opacity":'0'
+					}).animate({
+						"opacity":'1'
+					},2000);
 				}
 				else
 				{
@@ -92,8 +105,8 @@ var time = 200;
 		
 	}
 	intromodalnav.animate({
-		opacity: ".6",
-		bottom: "60px"
+		opacity: "1",
+		bottom: "150px"
 	},1500, "linear");
 
 	leftmodalarrow.click(function(){
@@ -259,5 +272,57 @@ var time = 200;
 			}
 		});
 	}
+	/* Functions for clicking the images on a single ad page with multiple images */
+	iasm.click( function(){
+		var thisindex = $(this).index();
+		console.log(thisindex);
+		iasm.each( function (index){
+			if (thisindex == index)
+			{
+				$(this).addClass('imageadssoloborder');
+				$(this).animate({
+					"opacity":"1"
+				},200);
+			}
+			else
+			{
+				$(this).removeClass('imageadssoloborder');
+				$(this).animate({
+					"opacity":".6"
+				},200);
+			}
+		});
+		adimages.each(function (index){
+			if (thisindex == index)
+			{
+				$(this).animate({
+					"opacity":"1"
+				},200);
+				$(this).addClass('imageadsdisplayed');
+				$(this).removeClass('imageadshidden');
+			}
+			else
+			{
+				$(this).animate({
+					"opacity":"0"
+				},200);
+				$(this).removeClass('imageadsdisplayed');
+				$(this).addClass('imageadshidden');
+			}
+		});
+	});
+	iasm.each( function (index){
+		if ($(this).hasClass('imageadssoloborder'))
+		{
+			$(this).animate({
+				"opacity":"1"
+			},200);
+		}
+	});
+	/* Yes, this is incredibly messy! All of it is! But it just werks!*/
+	/*The Delete function in all its glory. */
+	$('#deletead').click(function (){
+		$("#bottomlinkcontainer").append('<div id="yesbye" class="bottomlinks"><a href=/ads.delete.php?itemid='+deltext+'&delete=yes>Yes</a></div><div id="nobye" class="bottomlinks">No</div>');
+	});
 	lazyanimate();
 })();

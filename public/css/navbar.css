@@ -11,7 +11,8 @@ a{
 	position: relative;
 	text-decoration: none;
 }
-a:before {
+
+header a:before, footer a:before{
   content: "";
   position: absolute;
   width: 100%;
@@ -24,11 +25,13 @@ a:before {
   transform: scaleX(0);
   -webkit-transition: all 0.3s ease-in-out 0s;
   transition: all 0.3s ease-in-out 0s;
+  z-index: 8;
 }
-a:hover:before {
+header a:hover:before,footer a:hover:before{
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
+  z-index: 8;
 }
 .toplinks{
 	display: block;

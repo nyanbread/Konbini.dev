@@ -4,12 +4,12 @@ class Ad extends Model
 {
 	protected function insert($dbc)
 	{
-		if (array_key_exists("imgurlthird", $this->attributes))
+		if (array_key_exists("img_url_third", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second, img_url_third)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second, :img_url_third)';
 		}
-		elseif (array_key_exists("imgurlsecond", $this->attributes))
+		elseif (array_key_exists("img_url_second", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second)';						
@@ -19,13 +19,13 @@ class Ad extends Model
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main)
 						VALUES (:user, :item, :description, :price, :img_url_main)';
 		}
+		echo $insert;
 		$stmt = $dbc->prepare($insert);
 		$arraymess = ["imgurlthird","imgurlsecond","imgurlmain"];
 		foreach ($this->attributes as $key => $value)
 		{
 			for ($i=0; $i < count($arraymess); $i++)
 			{ 
-
 				if ($key == $arraymess[$i])
 				{
 					$newkey = substr($key, 0, 3)."_".substr($key, 3, 3)."_".substr($key, 6);
@@ -60,6 +60,15 @@ class Ad extends Model
 			$update = 'UPDATE ads SET user = :user, item = :item, description = :description, price = :price, img_url_main = :img_url_main WHERE id = :id';	
 		}
 		$stmt = $dbc->prepare($update);
+		foreach ($this->attributes as $key => $value) {
+            $stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+	}
+	protected function delete($dbc)
+	{
+		$delete = "DELETE from ads where id = :id";
+		$stmt = $dbc->prepare($delete);
 		foreach ($this->attributes as $key => $value) {
             $stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
         }

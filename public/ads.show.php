@@ -5,6 +5,8 @@ require "../models/Ad.php";
 require_once "../views/partials/navbar.php";
 require_once "../views/partials/footer.php";
 
+/* Ghetto JSON */
+
 if (!isset($_GET['page']) or $_GET["page"] < 0)
 {
 	$_GET['page'] = 0;
@@ -22,6 +24,7 @@ if (!isset($_GET["itemid"]))
 }
 else
 {
+	$responseText = $_GET["itemid"];
 	$idstart = $_GET['itemid'];
 	$_GET['limit'] = 1;
 }
@@ -66,8 +69,26 @@ function adsList($adsin)
 		{
 			$adsprice = "$".number_format((float)$adsin[$i]["price"], 2, '.', '');
 			$adsnum = $adsin[$i]['id'];
-			$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><img class='imageadssolo' src='" . $adsin[$i]["img_url_main"] . "'><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			if (!empty($adsin[$i]['img_url_second']) && !empty($adsin[$i]['img_url_third']))
+			{	
+			$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><div id=imageadscontainer><img class='imageadssolo imageadsdisplayed' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolo imageadshidden' src='" . $adsin[$i]["img_url_second"] . "'><img class='imageadssolo imageadshidden' src='" . $adsin[$i]["img_url_third"] . "'></div><div id='adsimgmodal'><img class='imageadssolomodal imageadssoloborder' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolomodal' src='" . $adsin[$i]["img_url_second"] . "'><img class='imageadssolomodal' src='" . $adsin[$i]["img_url_third"] . "'></div><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
 			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			}
+			elseif (empty($adsin[$i]['img_url_third']) && !empty($adsin[$i]['img_url_second']))
+			{
+				$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><div id=imageadscontainer><img class='imageadssolo imageadsdisplayed' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolo imageadshidden' src='" . $adsin[$i]["img_url_second"] . "'></div><div id='adsimgmodal'><img class='imageadssolomodal imageadssoloborder' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolomodal' src='" . $adsin[$i]["img_url_second"] . "'></div><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			}
+			elseif (!empty($adsin[$i]['img_url_third']) && empty($adsin[$i]['img_url_second']))
+			{
+				$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><div id=imageadscontainer><img class='imageadssolo imageadsdisplayed' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolo imageadshidden' src='" . $adsin[$i]["img_url_third"] . "'></div><div id='adsimgmodal'><img class='imageadssolomodal imageadssoloborder' src='" . $adsin[$i]["img_url_main"] . "'><img class='imageadssolomodal' src='" . $adsin[$i]["img_url_third"] . "'></div><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			}
+			else
+			{
+				$adsout[$i] = "<div id='ad" . $adsnum . "' class='adcontainerfail lazysolomargin font1'><div id=imageadscontainer><img class='imageadssolo imageadsdisplayed' src='" . $adsin[$i]["img_url_main"] . "'><div class='stuffseperator'></div><div class='adstextcontainersolo'><div class='adname fontlarge'>".$adsin[$i]["item"]."</div><div class='fontmedium'> From: <a href='?user=".$adsin[$i]['user']."'>". $adsin[$i]['user'] ."</a></div><div class='addescription fontmidsmall'>".
+			$adsin[$i]["description"]."</div><div class='pricecontiner'>Price: ". $adsprice ."</div></div></div>";
+			}
 			$i++;
 		}
 	}
@@ -141,20 +162,38 @@ extract(pageController());
 		<?php
 			if (!isset($_GET["itemid"]))
 			{
-				if($_GET['page'] > 0 and $endposts == false)
+				if (isset($_GET["user"]))
 				{
-					echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a>'.'<a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
+					if($_GET['page'] > 0 and $endposts == false)
+					{
+						echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'&user='.$_GET['user'].'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a>'.'<a href="/ads.show.php?page='. ($page + 1). '&user='.$_GET['user'].'"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
+					}
+					elseif($_GET["page"] > 0 and $endposts == true)
+					{
+						echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'&user='.$_GET['user'].'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a></div>';
+					}
+					elseif($endposts == false)
+					{	
+						echo '<div class="link-container"><a href="/ads.show.php?page='. ($page + 1). '&user='.$_GET['user'].'"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
+					}
 				}
-				elseif($_GET["page"] > 0 and $endposts == true)
+				else
 				{
-					echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a></div>';
-				}
-				elseif($endposts == false)
-				{	
-					echo '<div class="link-container"><a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
-				}
-			}
+					if($_GET['page'] > 0 and $endposts == false)
+					{
+						echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a>'.'<a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
+					}
+					elseif($_GET["page"] > 0 and $endposts == true)
+					{
+						echo '<div class="link-container font1 fontmidsmall"><a href="/ads.show.php?page='. ($page - 1) .'"><button class="pagelink font1 fontmidsmall">Previous Page</button></a></div>';
+					}
+					elseif($endposts == false)
+					{	
+						echo '<div class="link-container"><a href="/ads.show.php?page='. ($page + 1). '"><button class="pagelink font1 fontmidsmall">Next Page</button></a></div>';
+					}
+			}	}
 		?>
+		<div id='response'><?= $responseText ?></div>
 	</main>
 	<?= $footer->getFooter() ?>
 	<script src="/js/jquery-1.12.0.js"></script>
