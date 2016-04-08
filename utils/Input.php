@@ -2,41 +2,18 @@
 
 class Input
 {
-    /**
-     * Check if a given value was passed in the request
-     *
-     * @param string $key index to look for in request
-     * @return boolean whether value exists in $_POST or $_GET
-     */
-    public static function has($key)
-    {
-        return isset($_REQUEST[$key]);
-    }
 
-    /**
-     * Get a requested value from either $_POST or $_GET
-     *
-     * @param string $key index to look for in index
-     * @param mixed $default default value to return if key not found
-     * @return mixed value passed in request
-     */
-    public static function get($key, $default = null)
-    {
-        return self::has($key) ? trim($_REQUEST[$key]) : $default ;
-    }
-    public static function getString($key){
-        $string = self::get($key);
-        if (($string == mull | is_resource($string)) || is_bool($string) || is_numeric($string) || is_array($string) || is_object($string)){
-            throw new Exception('This is not a string or is null!');
+    public static function getString($value){
+        if (!is_string($value) || is_null($value)){
+            throw new Exception('This is not a string!');
         }
-        return $string;
+        return $value;
         }
-    public static function getNumber($key){
-        $number = self::get($key);
-        if (!is_numeric($number) || $number == null){
-            throw new Exception('This is not a number, or it\'s null.');
+    public static function getNumber($number){
+        if (!is_numeric($number) || is_null($number)){
+            throw new Exception("This is not a number.");
         }
-        return (float) $number;
+        return $number;
 
     }
     public static function getImage($key)
@@ -52,37 +29,31 @@ class Input
         { 
             if($imageType == $acceptedfiles[$i])
             {
-                echo "Okay!";
                 $imageFiletrue = true;
                 break;
             }
             $imageFiletrue = false;
         }
         if (!$imageFiletrue) {
-            echo "Not an accepted image filetype.";
             return false;
         }
         
 
         // checks if the image is too big (1000000 = 1MB)
         if ($key['size'] > 1000000){
-            echo "This file is too big!";
             return false;
         }
 
         // checks if the file uploaded is even an image with getimagesize
 
         $check = getimagesize($key['tmp_name']);
-        var_dump($check);
         if($check == false)
         {
-            echo "That's not an image!";
             return false;
         }
         else
         {
             move_uploaded_file($key['tmp_name'], $targetImage);
-            echo "Great Success";
         }
     }
 

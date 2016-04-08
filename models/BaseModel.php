@@ -24,7 +24,12 @@ abstract class Model
     {
         $this->update($dbc);
     }
+    public function rmthing($dbc)
+    {
+        $this->delete($dbc);
+    }
     protected abstract function insert($dbc);
     protected abstract function update($dbc);
+    protected abstract function delete($dbc);
 }
 ?>

@@ -4,12 +4,12 @@ class Ad extends Model
 {
 	protected function insert($dbc)
 	{
-		if (array_key_exists("imgurlthird", $this->attributes))
+		if (array_key_exists("img_url_third", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second, img_url_third)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second, :img_url_third)';
 		}
-		elseif (array_key_exists("imgurlsecond", $this->attributes))
+		elseif (array_key_exists("img_url_second", $this->attributes))
 		{
 			$insert = 'INSERT INTO ads (user, item, description, price, img_url_main, img_url_second)
 						VALUES (:user, :item, :description, :price, :img_url_main, :img_url_second)';						
@@ -21,7 +21,6 @@ class Ad extends Model
 		}
 		echo $insert;
 		$stmt = $dbc->prepare($insert);
-		print_r($this->attributes);
 		$arraymess = ["imgurlthird","imgurlsecond","imgurlmain"];
 		foreach ($this->attributes as $key => $value)
 		{
@@ -33,9 +32,13 @@ class Ad extends Model
 					echo $newkey.PHP_EOL;
             		$stmt->bindValue(':'.$newkey, $value, PDO::PARAM_STR);
         		}
-        		else
+        		elseif ($key !== "price")
         		{
         			$stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
+        		}
+        		elseif ($key == "price")
+        		{
+        			$stmt->bindValue(":".$key, $value, PDO::PARAM_STR);
         		}
 			}
 			
@@ -56,13 +59,22 @@ class Ad extends Model
 		{
 			$update = 'UPDATE ads SET user = :user, item = :item, description = :description, price = :price, img_url_main = :img_url_main WHERE id = :id';	
 		}
-		$stmt = $dbc->prepare($insert);
+		$stmt = $dbc->prepare($update);
 		foreach ($this->attributes as $key => $value) {
             $stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
         }
         $stmt->execute();
 	}
-	public static function findbyid($id)
+	protected function delete($dbc)
+	{
+		$delete = "DELETE from ads where id = :id";
+		$stmt = $dbc->prepare($delete);
+		foreach ($this->attributes as $key => $value) {
+            $stmt->bindValue(':'.$key, $value, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+	}
+	public static function findbyid($id, $dbc)
 	{
 		$search = 'SELECT * FROM ads where id = :id';
         $stmt = $dbc->prepare($search);
@@ -99,7 +111,7 @@ class Ad extends Model
         {
         	$result[] = $resultrow;
         }
-        return $result;
+        return @$result;
 	}
 	public static function findbyitem($dbc,$item)
 	{
@@ -119,6 +131,22 @@ class Ad extends Model
     	else
     	{
     		return null;
+    	}
+	}
+	public static function findbyuser($dbc,$user,$idstart)
+	{
+		$search = 'SELECT * FROM ads where user = :user and id >= :id limit 10';
+		$stmt = $dbc->prepare($search);
+        $stmt->bindValue(":user", $user, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $idstart, PDO::PARAM_INT);
+        $stmt->execute();
+        while ($resultrow = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+        	$result[] = $resultrow;
+        }
+        if (!is_null(@$result))
+        {
+        	return $result;
     	}
 	}
 }
